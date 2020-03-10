@@ -3,4 +3,7 @@ project(CplusplusLists)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(CplusplusLists singly_linked_list.cpp)
+add_executable(singly_linked_list singly_linked_list.cpp)
+add_executable(double_linked_list double_linked_list.cpp)
+add_executable(singly_list_lib library/singly_list/singly_list_lib.cpp library/singly_list/singly_list_lib.h)
+add_executable(double_list_lib library/double_list/double_list_lib.cpp library/double_list/double_list_lib.h)
