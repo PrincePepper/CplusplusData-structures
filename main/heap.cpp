@@ -11,21 +11,24 @@ class Heap {
     int *h;         // указатель на массив кучи
     int HeapSize; // размер кучи
 public:
-    explicit Heap(int SizeHeap);  // конструктор кучи,
-    void addElement(int);  // добавление элемента кучи
+    explicit Heap(unsigned int SizeHeap);  // конструктор кучи,
+    void push_heap(int);  // добавление элемента кучи
     void outHeap();  // вывод элементов кучи в форме кучи
     void out();  // вывод элементов кучи в форме массива
-    int getMax();  // удаление вершины (максимального элемента)
+    int getMax();  // вывод максимального элемента(вершины)
     void heapify(int);  // упорядочение кучи
+    int pop_heap();  // удаление вершины (максимального элемента)
+
+    int element_heap(unsigned int element); // доступ к элементам кучи
 };
 
 //Конструктор кучи
-Heap::Heap(int SizeHeap) {
+Heap::Heap(unsigned int SizeHeap) {
     h = new int[SizeHeap];
     HeapSize = 0;
 }
 
-void Heap::addElement(int n) {
+void Heap::push_heap(int n) {
     int i, parent;
     i = HeapSize;
     h[i] = n;
@@ -88,16 +91,25 @@ void Heap::heapify(int i) {
     }
 }
 
-//Удаление вершины кучи (максимального элемента)
+//Возвращение вершины
 int Heap::getMax() {
+    return (h[0]);
+}
+
+
+//Удаление вершины кучи (максимального элемента)
+int Heap::pop_heap() {
     int x;
     x = h[0];
     h[0] = h[HeapSize - 1];
     HeapSize--;
     heapify(0);
     return (x);
-}
+};
 
+int Heap::element_heap(unsigned int element) {
+    return element > HeapSize ? -1 : h[element];
+}
 
 int main() {
     Heap heap(5);
@@ -107,7 +119,7 @@ int main() {
     for (int i = 0; i < 16; i++) {
         cout << "Введите элемент" << i + 1 << ": ";
         cin >> k;
-        heap.addElement(k);
+        heap.push_heap(k);
     }
     heap.outHeap();
     cout << endl;
