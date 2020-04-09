@@ -2,53 +2,48 @@
 // Created by https://prog-cpp.ru/data-heap/
 //
 #include <iostream>
-#include <fstream>
 #include <vector>
-#include <numeric>
-#include <algorithm>
 
 using namespace std;
 
 //Реализация класса кучи
 class Heap {
-    static const int SIZE = 100000; // максимальный размер кучи
-    int *h;         // указатель на массив кучи
-    int HeapSize; // размер кучи
+    long long *h;         // указатель на массив кучи
+    long long int HeapSize; // размер кучи
 public:
-    explicit Heap(unsigned int SizeHeap);  // конструктор кучи,
-    void push_heap(int);  // добавление элемента кучи c сортировкой
-    void push_heapNoSort(int);   // добавление элемента кучи
+    explicit Heap(long long int SizeHeap);  // конструктор кучи,
+    void push_heap(long long int value);  // добавление элемента кучи c сортировкой
+    void push_heapNoSort(long long int value);   // добавление элемента кучи
     void BuildHeap();   // построение кучи по правилу
-    int pop_heap();  // удаление вершины (максимального элемента)
-    void heapify(int);  // упорядочение кучи
-    void heapify_old(int);  // упорядочение кучи
-    int element_heap(unsigned int element); // доступ к элементам кучи(изменять нельзя)
-    int *get_heap(unsigned int element); // доступ к элементам кучи(изменять можно)
+    long long int pop_heap();  // удаление вершины (максимального элемента)
+    void heapify(long long int index);  // упорядочение кучи
+    void heapify_old(long long int);  // упорядочение кучи(старая)
+    long long int element_heap(long long int element); // доступ к элементам кучи(изменять нельзя)
+    long long int *get_heap(long long int element); // доступ к элементам кучи(изменять можно)
     void printOut();  // вывод элементов кучи в форме массива
     void printOutHeap();  // вывод элементов кучи в форме кучи
 };
 
 //Конструктор кучи
-Heap::Heap(unsigned int SizeHeap) {
-    h = new int[SizeHeap];
+Heap::Heap(long long int SizeHeap) {
+    h = new long long int[SizeHeap];
     HeapSize = 0;
 }
 
-void Heap::push_heapNoSort(int n) {
-    int i;
+void Heap::push_heapNoSort(long long int value) {
+    long long int i;
     i = HeapSize;
-    h[i] = n;
+    h[i] = value;
     HeapSize++;
 }
 
-void Heap::push_heap(int n) {
-    int i, parent;
-    i = HeapSize;
-    h[i] = n;
+void Heap::push_heap(long long int value) {
+    long long int i = HeapSize, parent, temp;
+    h[i] = value;
     parent = (i - 1) / 2;
     while (parent >= 0 && i > 0) {
         if (h[i] > h[parent]) {
-            int temp = h[i];
+            temp = h[i];
             h[i] = h[parent];
             h[parent] = temp;
         }
@@ -58,33 +53,33 @@ void Heap::push_heap(int n) {
     HeapSize++;
 }
 
-void Heap::heapify(int i) {
-    int leftChild, rightChild;
-    int largestChild;
+void Heap::heapify(long long int index) {
+    long long int leftChild, rightChild, temp;
+    long long int largestChild;
     while (true) {
-        leftChild = 2 * i + 1;
-        rightChild = 2 * i + 2;
-        largestChild = i;
+        leftChild = 2 * index + 1;
+        rightChild = 2 * index + 2;
+        largestChild = index;
         if (leftChild < HeapSize && h[leftChild] > h[largestChild]) {
             largestChild = leftChild;
         }
         if (rightChild < HeapSize && h[rightChild] > h[largestChild]) {
             largestChild = rightChild;
         }
-        if (largestChild == i) {
+        if (largestChild == index) {
             break;
         }
-        int temp = h[i];
-        h[i] = h[largestChild];
+        temp = h[index];
+        h[index] = h[largestChild];
         h[largestChild] = temp;
-        i = largestChild;
+        index = largestChild;
     }
 }
 
 //Упорядочение кучи
-void Heap::heapify_old(int i) {
-    int left, right;
-    int temp;
+void Heap::heapify_old(long long int i) {
+    long long int left, right;
+    long long int temp;
     left = 2 * i + 1;
     right = 2 * i + 2;
     if (left < HeapSize) {
@@ -106,14 +101,14 @@ void Heap::heapify_old(int i) {
 }
 
 void Heap::BuildHeap() {
-    for (int i = HeapSize / 2; i >= 0; i--) {
+    for (long long int i = HeapSize / 2; i >= 0; i--) {
         heapify(i);
     }
 }
 
 //Удаление вершины кучи (максимального элемента)
-int Heap::pop_heap() {
-    int x;
+long long int Heap::pop_heap() {
+    long long int x;
     x = h[0];
     h[0] = h[HeapSize - 1];
     HeapSize--;
@@ -121,19 +116,18 @@ int Heap::pop_heap() {
     return (x);
 };
 
-int Heap::element_heap(unsigned int element) {
+long long int Heap::element_heap(long long int element) {
     return element > HeapSize ? -1 : h[element];
 }
 
-int *Heap::get_heap(unsigned int element) {
+long long int *Heap::get_heap(long long int element) {
     return &h[element];
 }
 
 
 //Вывод элементов в форме кучи
 void Heap::printOutHeap() {
-    int i = 0;
-    int k = 1;
+    long long int i = 0, k = 1;
     while (i < HeapSize) {
         while ((i < k) && (i < HeapSize)) {
             cout << h[i] << " ";
