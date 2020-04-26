@@ -1,6 +1,3 @@
-//
-// Created by https://prog-cpp.ru/data-heap/
-//
 #include <iostream>
 #include <vector>
 
@@ -22,12 +19,17 @@ public:
     long long int *get_heap(long long int element); // доступ к элементам кучи(изменять можно)
     void printOut();  // вывод элементов кучи в форме массива
     void printOutHeap();  // вывод элементов кучи в форме кучи
+    long long int size() const; //размер кучи
 };
 
 //Конструктор кучи
 Heap::Heap(long long int SizeHeap) {
     h = new long long int[SizeHeap];
     HeapSize = 0;
+}
+
+long long int Heap::size() const {
+    return HeapSize;
 }
 
 void Heap::push_heapNoSort(long long int value) {
